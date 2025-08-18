@@ -22,14 +22,14 @@ export default defineConfig(({ command }) => {
     server: isDev
       ? {
           host: true, // listen on 0.0.0.0 in Docker
-          port: 5173,
+          port: 9000,
           strictPort: true,
           watch: {
             usePolling: true, // ensure file changes are detected on Windows + Docker
           },
           hmr: {
             host: 'localhost',
-            port: 5173,
+            port: 9000,
           },
         }
       : undefined,

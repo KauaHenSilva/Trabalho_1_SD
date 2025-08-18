@@ -1,13 +1,28 @@
-const express = require('express');
-const app = express();
+import 'dotenv/config';
+import express from 'express';
+import cors from 'cors';
+import api from './routes/index.js';
 
-// Allow PORT to be injected by the platform (Render/Railway/Heroku/etc.)
-const PORT = process.env.PORT || 9001;
+const app = express();
+const PORT = Number(process.env.PORT_BACKEND || 9001);
 const HOST = '0.0.0.0';
 
+// Middlewares
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+);
+app.use(express.json());
+
+// Healthcheck
 app.get('/', (req, res) => {
-  res.send('Servidor Express com Node.js!');
+  res.json({ status: 'ok', service: 'backend', time: new Date().toISOString() });
 });
+
+// API routes
+app.use('/', api);
 
 app.listen(PORT, HOST, () => {
   console.log(`Servidor rodando em http://${HOST}:${PORT}`);

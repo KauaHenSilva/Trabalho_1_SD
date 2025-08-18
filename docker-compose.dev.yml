@@ -4,10 +4,12 @@ services:
       context: ./FrontEnd
       dockerfile: Dockerfile.dev
     ports:
-      - "5173:5173"
+      - "9000:9000"
     volumes:
-      - ./FrontEnd:/app:cached
+      - ./FrontEnd:/app
       - /app/node_modules
+    env_file:
+      - ./.env
     restart: unless-stopped
 
   backend:
@@ -15,8 +17,10 @@ services:
       context: ./backend
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "9001:9001"
     volumes:
-      - ./backend:/app:cached
+      - ./backend:/app
       - /app/node_modules
+    env_file:
+      - ./.env
     restart: unless-stopped

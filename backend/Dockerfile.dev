@@ -1,18 +1,6 @@
 FROM node:24-alpine
-
 WORKDIR /app
-
-# Install dependencies (use lockfile if available)
 COPY package*.json ./
-# For dev, prefer npm install to avoid lockfile mismatch errors when package.json changes
-RUN npm install
-
-# Ensure nodemon is available even if devDependencies are skipped
-RUN npm install -g nodemon@^3.1.0
-
-# Copy source
+RUN npm ci
 COPY . .
-
-EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
