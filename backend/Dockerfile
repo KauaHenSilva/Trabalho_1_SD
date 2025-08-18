@@ -9,4 +9,6 @@ RUN npm install --omit=dev
 
 # Copy source code
 COPY src ./src
+ENV NODE_ENV=production
+
 CMD ["npm", "start"]
