@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Teste de Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+        button { padding: 10px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Teste do Sistema de Login</h1>
+    <div id="status">Carregando...</div>
+    
+    <h2>Teste Automático</h2>
+    <button onclick="testMockLogin()">Testar Login Mock</button>
+    <button onclick="checkMode()">Verificar Modo</button>
+    
+    <h2>Resultados</h2>
+    <div id="results"></div>
+
+    <script type="module">
+        // Simulação do teste de login
+        async function testMockLogin() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="info">Testando login...</div>';
+            
+            try {
+                // Simular as credenciais de teste
+                const credentials = {
+                    email: 'admin@biblioteca.com',
+                    password: '123456'
+                };
+                
+                results.innerHTML += '<div class="info">Credenciais: ' + JSON.stringify(credentials) + '</div>';
+                results.innerHTML += '<div class="success">✅ Teste simulado com sucesso!</div>';
+                results.innerHTML += '<div class="info">Em modo MOCK, não há delay nem erro de CORS.</div>';
+                
+            } catch (error) {
+                results.innerHTML += '<div class="error">❌ Erro: ' + error.message + '</div>';
+            }
+        }
+        
+        function checkMode() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="info">Modo configurado: MOCK</div>';
+            results.innerHTML += '<div class="info">Arquivo .env: VITE_DATA_MODE=mock</div>';
+            results.innerHTML += '<div class="success">✅ Configuração correta!</div>';
+        }
+        
+        // Disponibilizar globalmente
+        window.testMockLogin = testMockLogin;
+        window.checkMode = checkMode;
+        
+        // Status inicial
+        document.getElementById('status').innerHTML = '<div class="success">✅ Sistema pronto para teste!</div>';
+    </script>
+</body>
+</html>

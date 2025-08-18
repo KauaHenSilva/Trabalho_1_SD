@@ -1,456 +1,540 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Biblioteca - Login</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.3.4/vue.global.min.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .logo {
-            width: 60px;
-            height: 60px;
-            background-color: #dc3545;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .title {
-            color: #333;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 500;
-            font-size: 14px;
-        }
-
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background-color: white;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #28a745;
-            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
-        }
-
-        .input-error {
-            border-color: #dc3545 !important;
-            box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1) !important;
-        }
-
-        .primary-button {
-            width: 100%;
-            padding: 14px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 15px;
-        }
-
-        .primary-button:hover:not(:disabled) {
-            background-color: #218838;
-            transform: translateY(-1px);
-        }
-
-        .primary-button:active {
-            transform: translateY(0);
-        }
-
-        .primary-button:disabled {
-            background-color: #6c757d;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .secondary-button {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #dc3545;
-            border-radius: 8px;
-            background-color: white;
-            color: #dc3545;
-            text-decoration: none;
-            font-weight: 600;
-            display: block;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .secondary-button:hover {
-            background-color: #dc3545;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .link-button {
-            color: #dc3545;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s ease;
-            cursor: pointer;
-        }
-
-        .link-button:hover {
-            color: #c82333;
-        }
-
-        .divider {
-            text-align: center;
-            margin: 25px 0;
-            position: relative;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background-color: #e0e0e0;
-            z-index: 1;
-        }
-
-        .divider span {
-            background-color: white;
-            padding: 0 15px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #f5c6cb;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border: 1px solid #c3e6cb;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .remember-me input[type="checkbox"] {
-            margin-right: 8px;
-            accent-color: #28a745;
-        }
-
-        .remember-me label {
-            margin-bottom: 0;
-            font-weight: normal;
-            font-size: 14px;
-            color: #666;
-            cursor: pointer;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s linear infinite;
-            margin-right: 8px;
-        }
-
-        .back-link {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .fade-enter-active, .fade-leave-active {
-            transition: opacity 0.3s ease;
-        }
-
-        .fade-enter-from, .fade-leave-to {
-            opacity: 0;
-        }
-    </style>
-</head>
-<body>
-    <div id="app">
-        <div class="container">
-            <div class="header">
-                <div class="logo">📚</div>
-                <h1 class="title">Sistema de Biblioteca</h1>
-                <p class="subtitle">Faça login para acessar sua conta</p>
+<template>
+  <div class="login-page">
+    <div class="container">
+      <div class="login-container">
+        <div class="login-header">
+          <div class="logo">📚</div>
+          <h1 class="title">Sistema de Biblioteca</h1>
+          <p class="subtitle">Faça login para acessar sua conta</p>
+          
+          <!-- Informações de teste (apenas em modo mock) -->
+          <div v-if="dataMode === 'mock'" class="test-info">
+            <div class="test-badge">
+              🧪 Modo de Teste
             </div>
-
-            <transition name="fade">
-                <div v-if="errorMessage" class="error-message">
-                    {{ errorMessage }}
-                </div>
-            </transition>
-
-            <transition name="fade">
-                <div v-if="successMessage" class="success-message">
-                    {{ successMessage }}
-                </div>
-            </transition>
-
-            <form @submit.prevent="handleLogin">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        v-model="form.email"
-                        :class="{ 'input-error': errors.email }"
-                        placeholder="seu@email.com" 
-                        required
-                        :disabled="isLoading"
-                    >
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input 
-                        type="password" 
-                        id="password" 
-                        v-model="form.password"
-                        :class="{ 'input-error': errors.password }"
-                        placeholder="Digite sua senha" 
-                        required
-                        :disabled="isLoading"
-                    >
-                </div>
-
-                <div class="remember-me">
-                    <input 
-                        type="checkbox" 
-                        id="remember" 
-                        v-model="form.rememberMe"
-                        :disabled="isLoading"
-                    >
-                    <label for="remember">Lembrar de mim</label>
-                </div>
-
-                <button 
-                    type="submit" 
-                    class="primary-button"
-                    :disabled="isLoading"
+            <details class="test-credentials">
+              <summary>Credenciais de teste</summary>
+              <div class="credentials-list">
+                <div 
+                  v-for="cred in testCredentials" 
+                  :key="cred.email"
+                  class="credential-item"
+                  @click="fillTestCredentials(cred)"
                 >
-                    <span v-if="isLoading" class="loading"></span>
-                    {{ isLoading ? 'Entrando...' : 'Entrar' }}
-                </button>
-
-                <div class="back-link">
-                    <a class="link-button" href="forgot-password.html">Esqueceu sua senha?</a>
+                  <strong>{{ cred.role === 'admin' ? '👤 Admin' : '👤 User' }}:</strong>
+                  <span>{{ cred.email }}</span>
+                  <small>Senha: {{ cred.password }}</small>
+                  <span class="click-hint">Clique para preencher</span>
                 </div>
-
-                <div class="divider">
-                    <span>ou</span>
-                </div>
-
-                <a href="register.html" class="secondary-button">
-                    Criar nova conta
-                </a>
-            </form>
+              </div>
+            </details>
+          </div>
         </div>
+
+        <transition name="fade">
+          <div v-if="errorMessage" class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div v-if="successMessage" class="alert alert-success">
+            {{ successMessage }}
+          </div>
+        </transition>
+
+        <form @submit.prevent="handleLogin" class="login-form">
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input 
+              type="email" 
+              id="email" 
+              v-model="form.email"
+              :class="['form-control', { 'is-invalid': errors.email }]"
+              placeholder="seu@email.com" 
+              required
+              :disabled="isLoading"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Senha</label>
+            <input 
+              type="password" 
+              id="password" 
+              v-model="form.password"
+              :class="['form-control', { 'is-invalid': errors.password }]"
+              placeholder="Digite sua senha" 
+              required
+              :disabled="isLoading"
+            >
+          </div>
+
+          <div class="form-check">
+            <input 
+              type="checkbox" 
+              id="remember" 
+              v-model="form.rememberMe"
+              class="form-check-input"
+              :disabled="isLoading"
+            >
+            <label for="remember" class="form-check-label">Lembrar de mim</label>
+          </div>
+
+          <button 
+            type="submit" 
+            class="btn btn-primary btn-login"
+            :disabled="isLoading"
+          >
+            <span v-if="isLoading" class="spinner me-2"></span>
+            {{ isLoading ? 'Entrando...' : 'Entrar' }}
+          </button>
+
+          <div class="text-center mt-3">
+            <a href="#" @click.prevent="handleForgotPassword" class="link-secondary">
+              Esqueceu sua senha?
+            </a>
+          </div>
+
+          <div class="divider">
+            <span>ou</span>
+          </div>
+
+          <router-link to="/cadastro" class="btn btn-outline-primary btn-register">
+            Criar nova conta
+          </router-link>
+        </form>
+      </div>
     </div>
+  </div>
+</template>
 
-    <script>
-        const { createApp } = Vue;
+<script setup lang="ts">
+import { ref, reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '../services'
+import { getTestCredentials, getCurrentDataMode } from '../services'
 
-        createApp({
-            data() {
-                return {
-                    form: {
-                        email: '',
-                        password: '',
-                        rememberMe: false
-                    },
-                    errors: {
-                        email: false,
-                        password: false
-                    },
-                    errorMessage: '',
-                    successMessage: '',
-                    isLoading: false
-                }
-            },
-            methods: {
-                async handleLogin() {
-                    this.clearMessages();
-                    
-                    if (!this.validateForm()) return;
+const router = useRouter()
 
-                    this.isLoading = true;
+const form = reactive({
+  email: '',
+  password: '',
+  rememberMe: false
+})
 
-                    try {
-                        await this.simulateAuth();
-                        
-                        if (this.form.email === 'admin@biblioteca.com' && this.form.password === '123456') {
-                            this.successMessage = 'Login realizado com sucesso! Redirecionando...';
-                            
-                            setTimeout(() => {
-                                alert('Bem-vindo ao sistema da biblioteca!');
-                                this.resetForm();
-                            }, 2000);
-                        } else {
-                            this.errorMessage = 'Email ou senha incorretos. Tente novamente.';
-                        }
-                    } catch (error) {
-                        this.errorMessage = 'Erro interno. Tente novamente mais tarde.';
-                    } finally {
-                        this.isLoading = false;
-                    }
-                },
+const errors = reactive({
+  email: false,
+  password: false
+})
 
-                validateForm() {
-                    this.errors = { email: false, password: false };
-                    let isValid = true;
+const errorMessage = ref('')
+const successMessage = ref('')
+const isLoading = ref(false)
+const dataMode = ref('')
+const testCredentials = ref<any[]>([])
 
-                    if (!this.form.email || !this.isValidEmail(this.form.email)) {
-                        this.errors.email = true;
-                        isValid = false;
-                    }
+onMounted(() => {
+  dataMode.value = getCurrentDataMode()
+  const creds = getTestCredentials()
+  if (creds) {
+    testCredentials.value = creds
+  }
+})
 
-                    if (!this.form.password || this.form.password.length < 3) {
-                        this.errors.password = true;
-                        isValid = false;
-                    }
+const handleLogin = async () => {
+  clearMessages()
+  
+  if (!validateForm()) return
 
-                    if (!isValid) {
-                        this.errorMessage = 'Por favor, preencha todos os campos corretamente.';
-                    }
+  isLoading.value = true
 
-                    return isValid;
-                },
+  try {
+    // Usar o serviço configurado (mock ou API real)
+    await authService.login({
+      email: form.email,
+      password: form.password
+    })
+    
+    successMessage.value = 'Login realizado com sucesso! Redirecionando...'
+    
+    setTimeout(() => {
+      router.push('/books')
+    }, 1000) // Reduzido de 1500 para 1000ms
+  } catch (error) {
+    errorMessage.value = error instanceof Error ? error.message : 'Erro interno. Tente novamente mais tarde.'
+  } finally {
+    isLoading.value = false
+  }
+}
 
-                isValidEmail(email) {
-                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    return emailRegex.test(email);
-                },
+const fillTestCredentials = (credentials: any) => {
+  form.email = credentials.email
+  form.password = credentials.password
+  clearMessages()
+}
 
-                simulateAuth() {
-                    return new Promise(resolve => {
-                        setTimeout(resolve, 1500);
-                    });
-                },
+const handleForgotPassword = () => {
+  if (dataMode.value === 'mock') {
+    alert('Em modo de teste, use as credenciais fornecidas acima.')
+  } else {
+    alert('Funcionalidade de recuperação de senha será implementada em breve.')
+  }
+}
 
-                clearMessages() {
-                    this.errorMessage = '';
-                    this.successMessage = '';
-                    this.errors = { email: false, password: false };
-                },
+const validateForm = () => {
+  errors.email = false
+  errors.password = false
+  let isValid = true
 
-                resetForm() {
-                    this.form = {
-                        email: '',
-                        password: '',
-                        rememberMe: false
-                    };
-                    this.clearMessages();
-                }
-            },
+  if (!form.email || !isValidEmail(form.email)) {
+    errors.email = true
+    isValid = false
+  }
 
-            watch: {
-                'form.email'() {
-                    if (this.errors.email) {
-                        this.errors.email = false;
-                    }
-                },
-                'form.password'() {
-                    if (this.errors.password) {
-                        this.errors.password = false;
-                    }
-                }
-            }
-        }).mount('#app');
-    </script>
-</body>
-</html>
+  if (!form.password || form.password.length < 3) {
+    errors.password = true
+    isValid = false
+  }
+
+  if (!isValid) {
+    errorMessage.value = 'Por favor, preencha todos os campos corretamente.'
+  }
+
+  return isValid
+}
+
+const isValidEmail = (email: string) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+const clearMessages = () => {
+  errorMessage.value = ''
+  successMessage.value = ''
+  errors.email = false
+  errors.password = false
+}
+</script>
+
+<style scoped>
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-info) 100%);
+  padding: var(--spacing-4);
+}
+
+.login-container {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-8);
+  width: 100%;
+  max-width: 400px;
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: var(--spacing-8);
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--color-secondary), var(--color-primary));
+  border-radius: 50%;
+  margin: 0 auto var(--spacing-4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: var(--font-size-2xl);
+  font-weight: bold;
+  box-shadow: var(--shadow-md);
+}
+
+.title {
+  color: var(--color-gray-700);
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  margin-bottom: var(--spacing-2);
+}
+
+.subtitle {
+  color: var(--color-gray-500);
+  font-size: var(--font-size-sm);
+}
+
+/* Informações de teste */
+.test-info {
+  margin-top: var(--spacing-6);
+  padding: var(--spacing-4);
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+}
+
+.test-badge {
+  background-color: #fd7e14;
+  color: white;
+  padding: var(--spacing-1) var(--spacing-2);
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  display: inline-block;
+  margin-bottom: var(--spacing-3);
+  font-size: var(--font-size-xs);
+}
+
+.test-credentials {
+  margin-top: var(--spacing-2);
+}
+
+.test-credentials summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-gray-600);
+  padding: var(--spacing-1) 0;
+  user-select: none;
+}
+
+.test-credentials summary:hover {
+  color: var(--color-primary);
+}
+
+.credentials-list {
+  margin-top: var(--spacing-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.credential-item {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+
+.credential-item:hover {
+  border-color: var(--color-primary);
+  background-color: #f8f9fa;
+  transform: translateY(-1px);
+}
+
+.credential-item strong {
+  color: var(--color-gray-700);
+}
+
+.credential-item span:not(.click-hint) {
+  color: var(--color-gray-600);
+}
+
+.credential-item small {
+  color: var(--color-gray-500);
+  font-family: monospace;
+}
+
+.click-hint {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.credential-item:hover .click-hint {
+  opacity: 1;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.form-label {
+  color: var(--color-gray-600);
+  font-weight: 600;
+  font-size: var(--font-size-sm);
+}
+
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.form-check-input {
+  accent-color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.form-check-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  cursor: pointer;
+}
+
+.btn-login,
+.btn-register {
+  width: 100%;
+  padding: var(--spacing-4);
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease;
+}
+
+.btn-login:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-register {
+  border-width: 2px;
+}
+
+.link-secondary {
+  color: var(--color-secondary);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.link-secondary:hover {
+  color: var(--color-secondary-dark);
+  text-decoration: underline;
+}
+
+.divider {
+  text-align: center;
+  margin: var(--spacing-6) 0;
+  position: relative;
+  color: var(--color-gray-400);
+  font-size: var(--font-size-sm);
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--color-gray-200);
+  z-index: 1;
+}
+
+.divider span {
+  background-color: var(--color-white);
+  padding: 0 var(--spacing-4);
+  position: relative;
+  z-index: 2;
+}
+
+.alert {
+  padding: var(--spacing-3) var(--spacing-4);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-sm);
+  border: 1px solid;
+  margin-bottom: var(--spacing-4);
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border-color: #f5c6cb;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border-color: #c3e6cb;
+}
+
+.me-2 {
+  margin-right: var(--spacing-2);
+}
+
+.mt-3 {
+  margin-top: var(--spacing-3);
+}
+
+/* Responsividade mobile */
+@media (max-width: 480px) {
+  .login-page {
+    padding: var(--spacing-2);
+  }
+  
+  .login-container {
+    padding: var(--spacing-6);
+    margin: var(--spacing-4) 0;
+  }
+  
+  .title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .logo {
+    width: 50px;
+    height: 50px;
+    font-size: var(--font-size-xl);
+  }
+}
+
+/* Responsividade tablet */
+@media (min-width: 768px) {
+  .login-container {
+    padding: var(--spacing-10);
+  }
+}
+
+/* Estados de foco aprimorados para acessibilidade */
+.form-control:focus,
+.form-check-input:focus,
+.btn:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Animações suaves */
+.form-control,
+.btn {
+  transition: all 0.3s ease;
+}
+
+/* Melhor contraste para modo escuro (preparação futura) */
+@media (prefers-color-scheme: dark) {
+  .login-page {
+    background: linear-gradient(135deg, #1a5632 0%, #0f4c81 100%);
+  }
+}
+</style>
