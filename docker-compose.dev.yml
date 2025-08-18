@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./FrontEnd:/app:cached
+      - /app/node_modules
+    restart: unless-stopped
