@@ -6,3 +6,11 @@ services:
     ports:
       - "9000:9000"
     restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "9001:9001"
+    restart: unless-stopped
