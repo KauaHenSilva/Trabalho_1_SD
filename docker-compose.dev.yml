@@ -9,3 +9,14 @@ services:
       - ./FrontEnd:/app:cached
       - /app/node_modules
     restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app:cached
+      - /app/node_modules
+    restart: unless-stopped
