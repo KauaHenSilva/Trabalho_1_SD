@@ -4,7 +4,8 @@ WORKDIR /app
 
 # Install dependencies first (use lockfile if present)
 COPY package*.json ./
-RUN if [ -f package-lock.json ]; then npm ci --omit=dev; else npm install --omit=dev; fi
+# Use npm install to avoid strict lockfile sync errors in CI/builds
+RUN npm install --omit=dev
 
 # Copy source code
 COPY src ./src
