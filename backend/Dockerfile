@@ -9,7 +9,4 @@ RUN npm install --omit=dev
 
 # Copy source code
 COPY src ./src
-
-EXPOSE 3000
-
 CMD ["npm", "start"]
