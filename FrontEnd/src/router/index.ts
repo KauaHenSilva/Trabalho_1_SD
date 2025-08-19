@@ -1,4 +1,6 @@
+// router/index.js
 import { createRouter, createWebHistory } from 'vue-router'
+import { authService } from '@/services/authService'
 import Login from '../pages/login.vue'
 import Cadastro from '../pages/cadastro.vue'
 import BookList from '../pages/BookList.vue'
@@ -11,7 +13,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/login'
+      redirect: '/books'
     },
     {
       path: '/login',
@@ -26,26 +28,40 @@ const router = createRouter({
     {
       path: '/books',
       name: 'BookList',
-      component: BookList
+      component: BookList,
+      meta: { requiresAuth: true }
     },
     {
       path: '/books/create',
       name: 'BookCreate',
-      component: BookCreate
+      component: BookCreate,
+      meta: { requiresAuth: true }
     },
     {
       path: '/books/:id',
       name: 'BookDetail',
       component: BookDetail,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     },
     {
       path: '/books/:id/edit',
       name: 'BookEdit',
       component: BookEdit,
-      props: true
+      props: true,
+      meta: { requiresAuth: true }
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const token_valido = await authService.validateToken()
+  if (to.meta.requiresAuth && !token_valido) {
+    console.log('Rota protegida. Redirecionando para o login...')
+    next('/login')
+  } else {
+    next()
+  }
 })
 
 export default router

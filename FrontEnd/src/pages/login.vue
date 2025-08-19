@@ -10,9 +10,10 @@
           <input
             type="email"
             id="email"
-            v-model="email"
+            v-model="form.email"
             placeholder="seu@email.com"
             required
+            :disabled="isLoading"
           />
         </div>
 
@@ -24,10 +25,14 @@
             v-model="senha"
             placeholder="Sua senha"
             required
+            :disabled="isLoading"
           />
         </div>
 
-        <button type="submit">Entrar</button>
+        <button type="submit" :disabled="isLoading">
+          <span v-if="isLoading">Carregando...</span>
+          <span v-else>Entrar</span>
+        </button>
       </form>
 
       <!-- Botão que leva para a página de cadastro -->

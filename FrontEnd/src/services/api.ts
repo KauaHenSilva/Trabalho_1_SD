@@ -1,5 +1,6 @@
 // Configuração base da API
-const API_BASE_URL = import.meta.env.PUBLIC_SITE_URL || 'http://localhost:9001'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:9001'
+console.warn('API_BASE_URL:', import.meta.env.VITE_API_URL)
 
 // Interface para configuração das requisições
 interface RequestConfig {
@@ -27,6 +28,7 @@ class ApiClient {
 
     // Adicionar token de autenticação se existir
     const token = localStorage.getItem('auth-token')
+    console.log('Token de autenticação:', token)
     if (token) {
       requestHeaders.authorization = `Bearer ${token}`
     }

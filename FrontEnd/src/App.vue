@@ -4,6 +4,7 @@ import { authService } from './services/authService'
 
 // Prover o serviço de autenticação globalmente
 provide('authService', authService)
+
 </script>
 
 <template>

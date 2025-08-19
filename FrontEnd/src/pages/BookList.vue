@@ -120,7 +120,7 @@
                                     <tr>
                                         <th>Capa</th>
                                         <th>Título</th>
-                                        <th>Autor</th>
+                                        <th>Ano</th>
                                         <th v-if="canEdit || canDelete">Ações</th>
                                     </tr>
                                 </thead>
@@ -253,7 +253,6 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import type { Book } from '../services/api'
-import UserHeader from '../components/UserHeader.vue'
 import { usePermissions } from '../composables/usePermissions'
 import { bookService } from '@/services/bookService'
 
