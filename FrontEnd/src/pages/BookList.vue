@@ -120,7 +120,7 @@
                                     <tr>
                                         <th>Capa</th>
                                         <th>Título</th>
-                                        <th>Autor</th>
+                                        <th>Ano</th>
                                         <th v-if="canEdit || canDelete">Ações</th>
                                     </tr>
                                 </thead>
