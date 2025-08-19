@@ -1,8 +1,8 @@
 services:
   frontend:
     build:
-      context: ./FrontEnd
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: FrontEnd/Dockerfile
     ports:
       - "9000:9000"
     env_file:
