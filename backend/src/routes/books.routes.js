@@ -76,8 +76,7 @@ router.put('/:id', requireAuth, async (req, res) => {
       .from('books')
       .update(patch)
       .eq('id', id)
-      .select('*')
-      .single();
+      .select('*');
 
     if (error) return res.status(400).json({ error: error.message });
     if (!data) return res.status(404).json({ error: 'Livro não encontrado.' });
@@ -93,7 +92,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
     const { id } = req.params;
     const { error } = await supabase.from('books').delete().eq('id', id);
     if (error) return res.status(400).json({ error: error.message });
-    return res.status(204).send();
+    return res.status(200).json({ message: 'sucess' });
   } catch (err) {
     return res.status(500).json({ error: 'Erro ao excluir livro.' });
   }

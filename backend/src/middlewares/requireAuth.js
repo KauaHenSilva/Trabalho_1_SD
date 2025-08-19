@@ -2,7 +2,7 @@ import supabase from '../config/supabase.js';
 
 export default async function requireAuth(req, res, next) {
   try {
-    const authHeader = req.headers.Authorization || '';
+    const authHeader = req.headers.authorization || '';
     const token = authHeader.startsWith('Bearer ')
       ? authHeader.substring('Bearer '.length)
       : null;

@@ -2,19 +2,20 @@ import { apiClient } from './api'
 import type { Book, PaginatedResponse } from './api'
 
 export interface BookFilters {
-  title?: string
+  id?: number
   author?: string
-  category?: string
-  available?: boolean
+  title?: string
+  year?: number
   page?: number
   limit?: number
+  available?: boolean
 }
 
 export class BookService {
   async getBooks(filters: BookFilters = {}): Promise<PaginatedResponse<Book>> {
     try {
       const queryParams = new URLSearchParams()
-      
+
       Object.entries(filters).forEach(([key, value]) => {
         if (value !== undefined && value !== '') {
           queryParams.append(key, String(value))
@@ -23,6 +24,7 @@ export class BookService {
 
       const endpoint = `/books${queryParams.toString() ? `?${queryParams.toString()}` : ''}`
       const response = await apiClient.get<PaginatedResponse<Book>>(endpoint)
+      console.log(response)
       return response
     } catch (error) {
       console.error('Failed to fetch books:', error)
@@ -43,6 +45,7 @@ export class BookService {
   async createBook(bookData: Omit<Book, 'id' | 'createdAt' | 'updatedAt'>): Promise<Book> {
     try {
       const response = await apiClient.post<Book>('/books', bookData)
+      console.log(response)
       return response
     } catch (error) {
       console.error('Failed to create book:', error)
@@ -62,7 +65,9 @@ export class BookService {
 
   async deleteBook(id: number): Promise<void> {
     try {
-      await apiClient.delete(`/books/${id}`)
+      const response = await apiClient.delete(`/books/${id}`)
+      console.log(response)
+      return
     } catch (error) {
       console.error('Failed to delete book:', error)
       throw new Error('Falha ao excluir o livro.')

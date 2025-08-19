@@ -23,12 +23,7 @@
       <div class="nav-content">
         <slot name="navigation"></slot>
       </div>
-      <button 
-        v-if="isMobile" 
-        @click="toggleMobileNav"
-        class="nav-toggle"
-        aria-label="Toggle navigation"
-      >
+      <button v-if="isMobile" @click="toggleMobileNav" class="nav-toggle" aria-label="Toggle navigation">
         {{ mobileNavOpen ? '✕' : '☰' }}
       </button>
     </nav>
@@ -53,11 +48,7 @@
     </footer>
 
     <!-- Mobile Overlay -->
-    <div 
-      v-if="isMobile && mobileNavOpen" 
-      class="mobile-overlay"
-      @click="closeMobileNav"
-    ></div>
+    <div v-if="isMobile && mobileNavOpen" class="mobile-overlay" @click="closeMobileNav"></div>
   </div>
 </template>
 
@@ -280,7 +271,7 @@ onUnmounted(() => {
   display: grid;
   grid-template-columns: 250px 1fr;
   grid-template-rows: auto 1fr auto;
-  grid-template-areas: 
+  grid-template-areas:
     "header header"
     "nav main"
     "footer footer";
@@ -319,16 +310,16 @@ onUnmounted(() => {
   .app-title {
     font-size: var(--font-size-lg);
   }
-  
+
   .header-content {
     padding: var(--spacing-3) 0;
     min-height: 3.5rem;
   }
-  
+
   .nav-toggle {
     display: block;
   }
-  
+
   .app-nav {
     position: fixed;
     top: 0;
@@ -340,22 +331,22 @@ onUnmounted(() => {
     transition: transform 0.3s ease;
     z-index: 95;
   }
-  
+
   .nav-mobile-open {
     transform: translateX(0);
   }
-  
+
   .nav-content {
     padding: var(--spacing-8) var(--spacing-4) var(--spacing-4);
     height: 100%;
     overflow-y: auto;
   }
-  
+
   .layout-sidebar {
     display: flex;
     flex-direction: column;
   }
-  
+
   .main-centered {
     min-height: calc(100vh - 3.5rem);
   }
@@ -377,6 +368,7 @@ onUnmounted(() => {
 
 /* High contrast mode */
 @media (prefers-contrast: high) {
+
   .app-header,
   .app-nav,
   .app-footer {
@@ -386,6 +378,7 @@ onUnmounted(() => {
 
 /* Print styles */
 @media print {
+
   .app-header,
   .app-nav,
   .app-footer,
@@ -393,7 +386,7 @@ onUnmounted(() => {
   .mobile-overlay {
     display: none !important;
   }
-  
+
   .app-main {
     margin: 0 !important;
     padding: 0 !important;

@@ -1,5 +1,5 @@
 // Configuração base da API
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api'
+const API_BASE_URL = import.meta.env.PUBLIC_SITE_URL || 'http://localhost:9001'
 
 // Interface para configuração das requisições
 interface RequestConfig {
@@ -28,7 +28,7 @@ class ApiClient {
     // Adicionar token de autenticação se existir
     const token = localStorage.getItem('auth-token')
     if (token) {
-      requestHeaders.Authorization = `Bearer ${token}`
+      requestHeaders.authorization = `Bearer ${token}`
     }
 
     try {
@@ -70,12 +70,9 @@ class ApiClient {
 // Instância global da API
 export const apiClient = new ApiClient(API_BASE_URL)
 
-// Tipos para as entidades da aplicação
 export interface User {
   id: number
   email: string
-  name: string
-  role: 'admin' | 'user'
   createdAt: string
 }
 
@@ -83,14 +80,9 @@ export interface Book {
   id: number
   title: string
   author: string
-  isbn: string
   year: number
   pages: number
-  description?: string
-  category?: string
-  available?: boolean
   createdAt?: string
-  updatedAt?: string
 }
 
 export interface LoginRequest {
@@ -104,7 +96,6 @@ export interface LoginResponse {
 }
 
 export interface RegisterRequest {
-  name: string
   email: string
   password: string
 }

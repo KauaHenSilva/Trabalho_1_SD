@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { authService } from '../services'
+import { authService } from '../services/authService'
 import type { User } from '../services/api'
 
 export function usePermissions() {
@@ -8,11 +8,7 @@ export function usePermissions() {
   })
 
   const isAdmin = computed(() => {
-    return currentUser.value?.role === 'admin'
-  })
-
-  const isUser = computed(() => {
-    return currentUser.value?.role === 'user'
+    return true
   })
 
   const canCreate = computed(() => {
@@ -34,7 +30,6 @@ export function usePermissions() {
   return {
     currentUser,
     isAdmin,
-    isUser,
     canCreate,
     canEdit,
     canDelete,

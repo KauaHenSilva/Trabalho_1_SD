@@ -31,14 +31,14 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { authService } from '../services'
 import type { User } from '../services/api'
+import { authService } from '@/services/authService'
 
 const router = useRouter()
 const currentUser = ref<User | null>(null)
 
 onMounted(() => {
-  currentUser.value = authService.getCurrentUser()
+  // currentUser.value = authService.getCurrentUser()
 })
 
 const getInitials = (name: string): string => {
