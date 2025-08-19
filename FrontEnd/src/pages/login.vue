@@ -17,12 +17,12 @@
         </div>
 
         <div class="input-group">
-          <label for="password">Senha</label>
+          <label for="senha">Senha</label>
           <input
             type="password"
-            id="password"
-            v-model="password"
-            placeholder="Digite sua senha"
+            id="senha"
+            v-model="senha"
+            placeholder="Sua senha"
             required
           />
         </div>
@@ -30,31 +30,31 @@
         <button type="submit">Entrar</button>
       </form>
 
-      <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+      <!-- Botão que leva para a página de cadastro -->
+      <p class="register-link">
+        Não tem conta?
+        <router-link to="/cadastro" class="register-btn">Registrar</router-link>
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "LoginPage",
+  name: "Login",
   data() {
     return {
       email: "",
-      password: "",
-      errorMessage: "",
+      senha: ""
     };
   },
   methods: {
     handleLogin() {
-      if (this.email && this.password) {
-        alert(`Login realizado com sucesso!\nEmail: ${this.email}`);
-        this.errorMessage = "";
-      } else {
-        this.errorMessage = "Por favor, preencha email e senha corretamente.";
-      }
-    },
-  },
+      // aqui você faz sua lógica de autenticação
+      alert(`Login de ${this.email} realizado!`);
+      this.$router.push("/home"); // exemplo de redirecionamento pós-login
+    }
+  }
 };
 </script>
 
@@ -64,74 +64,61 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #6a11cb, #2575fc);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f5f5;
 }
 
 .login-card {
-  background-color: #fff;
-  padding: 30px 40px;
-  border-radius: 12px;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   width: 350px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  text-align: center;
-}
-
-h2 {
-  margin-bottom: 10px;
-  color: #333;
-}
-
-p {
-  margin-bottom: 20px;
-  color: #666;
 }
 
 .input-group {
-  margin-bottom: 15px;
-  text-align: left;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #444;
+.input-group label {
+  margin-bottom: 0.5rem;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+.input-group input {
+  padding: 0.5rem;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-input:focus {
-  border-color: #2575fc;
-  outline: none;
-  box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
 }
 
 button {
   width: 100%;
-  padding: 12px;
-  background-color: #2575fc;
-  color: #fff;
-  font-size: 16px;
+  padding: 0.7rem;
+  background-color: #007bff;
+  color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   cursor: pointer;
-  transition: 0.3s;
 }
 
 button:hover {
-  background-color: #6a11cb;
+  background-color: #0056b3;
 }
 
-.error {
-  color: red;
-  margin-top: 15px;
+.register-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.register-btn {
+  margin-left: 5px;
+  color: #007bff;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.register-btn:hover {
+  text-decoration: underline;
 }
 </style>
-
