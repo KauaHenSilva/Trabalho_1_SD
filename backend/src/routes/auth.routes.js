@@ -102,10 +102,10 @@ router.get('/validate', async (req, res) => {
 
 router.post('/logout', requireAuth, async (req, res) => {
   try {
-    const userId = req.user?.id;
-    if (!userId) return res.status(401).json({ error: 'Não autenticado.' });
-    
-    const { error } = await supabase.auth.admin.signOut(userId);
+    const token = getBearerToken(req);
+    if (!token) return res.status(401).json({ error: 'Não autenticado.' });
+
+    const { error } = await supabase.auth.admin.signOut(token);
     if (error) return res.status(400).json({ error: error.message });
     return res.status(204).send();
   } catch (err) {
