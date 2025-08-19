@@ -1,16 +1,16 @@
 services:
-  # frontend:
-  #   build:
-  #     context: ./FrontEnd
-  #     dockerfile: Dockerfile.dev
-  #   ports:
-  #     - "9000:9000"
-  #   volumes:
-  #     - ./FrontEnd:/app
-  #     - /app/node_modules
-  #   env_file:
-  #     - ./.env
-  #   restart: unless-stopped
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile.dev
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./FrontEnd:/app
+      - /app/node_modules
+    env_file:
+      - ./.env
+    restart: unless-stopped
 
   # frontend:
   #   build:
