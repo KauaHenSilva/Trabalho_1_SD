@@ -10,9 +10,10 @@
           <input
             type="email"
             id="email"
-            v-model="email"
+            v-model="form.email"
             placeholder="seu@email.com"
             required
+            :disabled="isLoading"
           />
         </div>
 
@@ -21,13 +22,17 @@
           <input
             type="password"
             id="password"
-            v-model="password"
+            v-model="form.password"
             placeholder="Digite sua senha"
             required
+            :disabled="isLoading"
           />
         </div>
 
-        <button type="submit">Entrar</button>
+        <button type="submit" :disabled="isLoading">
+          <span v-if="isLoading">Carregando...</span>
+          <span v-else>Entrar</span>
+        </button>
       </form>
 
       <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
@@ -35,27 +40,44 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "LoginPage",
-  data() {
-    return {
-      email: "",
-      password: "",
-      errorMessage: "",
-    };
-  },
-  methods: {
-    handleLogin() {
-      if (this.email && this.password) {
-        alert(`Login realizado com sucesso!\nEmail: ${this.email}`);
-        this.errorMessage = "";
-      } else {
-        this.errorMessage = "Por favor, preencha email e senha corretamente.";
-      }
-    },
-  },
-};
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '../services/authService'
+
+const router = useRouter()
+const form = reactive({
+    email: '',
+    password: '',
+})
+
+const errorMessage = ref('')
+const successMessage = ref('')
+const isLoading = ref(false)
+
+const handleLogin = async () => {
+    clearMessages()
+    isLoading.value = true
+
+    try {
+        await authService.login({
+            email: form.email,
+            password: form.password
+        })
+
+        successMessage.value = 'Login realizado com sucesso! Redirecionando...'
+        setTimeout(() => {router.push('/books')}, 1000)
+    } catch (error) {
+        errorMessage.value = error instanceof Error ? error.message : 'Erro interno. Tente novamente mais tarde.'
+    } finally {
+        isLoading.value = false
+    }
+}
+
+const clearMessages = () => {
+    errorMessage.value = ''
+    successMessage.value = ''
+}
 </script>
 
 <style scoped>

@@ -5,8 +5,6 @@ export class AuthService {
   async login(credentials: LoginRequest): Promise<LoginResponse> {
     try {
       const response = await apiClient.post<LoginResponse>('/auth/login', credentials)
-
-      // Salvar token no localStorage
       if (response.token) {
         localStorage.setItem('auth-token', response.token)
         localStorage.setItem('user', JSON.stringify(response.user))

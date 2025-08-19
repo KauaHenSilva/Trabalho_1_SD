@@ -27,6 +27,7 @@ class ApiClient {
 
     // Adicionar token de autenticação se existir
     const token = localStorage.getItem('auth-token')
+    console.log('Token de autenticação:', token)
     if (token) {
       requestHeaders.authorization = `Bearer ${token}`
     }
