@@ -109,10 +109,16 @@
                         Tentar Novamente
                     </button>
                 </div>
+                
+                
 
                 <!-- Conteúdo Principal -->
                 <div v-else class="main-content">
                     <!-- Visualização em Tabela -->
+                     <router-link v-if="canCreate" to="/books/create" class="add-book-btn" title="Adicionar Livro">
+                        ➕ Adicionar Livro
+                    </router-link>
+                    
                     <div v-if="viewMode === 'table'" class="table-view">
                         <div class="table-container">
                             <table class="books-table">
@@ -191,10 +197,6 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <router-link v-if="canCreate" to="/books/create" class="add-book-btn" title="Adicionar Livro">
-                        ➕ Adicionar Livro
-                    </router-link>
                     
                     <!-- Estado Vazio -->
                     <div v-if="filteredBooks.length === 0 && !isLoading" class="empty-state">

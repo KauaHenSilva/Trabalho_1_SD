@@ -6,11 +6,6 @@
 
       <form @submit.prevent="handleCadastro">
         <div class="input-group">
-          <label for="nome">Nome</label>
-          <input type="text" id="nome" v-model="nome" placeholder="Seu nome" required />
-        </div>
-
-        <div class="input-group">
           <label for="email">Email</label>
           <input type="email" id="email" v-model="email" placeholder="seu@email.com" required />
         </div>
