@@ -110,8 +110,6 @@
                     </button>
                 </div>
                 
-                
-
                 <!-- Conteúdo Principal -->
                 <div v-else class="main-content">
                     <!-- Visualização em Tabela -->
@@ -257,6 +255,7 @@ import { useRouter, useRoute } from 'vue-router'
 import type { Book } from '../services/api'
 import { usePermissions } from '../composables/usePermissions'
 import { bookService } from '@/services/bookService'
+import UserHeader from '@/components/UserHeader.vue'
 
 const router = useRouter()
 const route = useRoute()
