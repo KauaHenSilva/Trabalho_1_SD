@@ -22,7 +22,7 @@
           <input
             type="password"
             id="senha"
-            v-model="senha"
+            v-model="form.password"
             placeholder="Sua senha"
             required
             :disabled="isLoading"
@@ -44,23 +44,44 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "Login",
-  data() {
-    return {
-      email: "",
-      senha: ""
-    };
-  },
-  methods: {
-    handleLogin() {
-      // aqui você faz sua lógica de autenticação
-      alert(`Login de ${this.email} realizado!`);
-      this.$router.push("/home"); // exemplo de redirecionamento pós-login
+<script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '../services/authService'
+
+const router = useRouter()
+const form = reactive({
+    email: '',
+    password: '',
+})
+
+const errorMessage = ref('')
+const successMessage = ref('')
+const isLoading = ref(false)
+
+const handleLogin = async () => {
+    clearMessages()
+    isLoading.value = true
+
+    try {
+        await authService.login({
+            email: form.email,
+            password: form.password
+        })
+
+        successMessage.value = 'Login realizado com sucesso! Redirecionando...'
+        setTimeout(() => {router.push('/books')}, 0)
+    } catch (error) {
+        errorMessage.value = error instanceof Error ? error.message : 'Erro interno. Tente novamente mais tarde.'
+    } finally {
+        isLoading.value = false
     }
-  }
-};
+}
+
+const clearMessages = () => {
+    errorMessage.value = ''
+    successMessage.value = ''
+}
 </script>
 
 <style scoped>
