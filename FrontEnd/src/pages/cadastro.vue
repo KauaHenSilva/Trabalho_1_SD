@@ -4,8 +4,6 @@
       <h2>Criar Conta</h2>
       <form @submit.prevent="handleRegister">
         <div class="input-group">
-          <label for="name">Nome</label>
-          <input type="text" id="name" v-model="form.name" required />
         </div>
 
         <div class="input-group">
@@ -114,5 +112,10 @@ export default defineComponent({
   color: #42b983;
   font-weight: bold;
   text-decoration: none;
+}
+
+.register-card p {
+  text-align: center;
+  margin-top: 1rem;
 }
 </style>
