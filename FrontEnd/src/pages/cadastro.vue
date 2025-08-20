@@ -1,75 +1,81 @@
 <template>
-  <div class="cadastro-wrapper">
-    <div class="cadastro-card">
-      <h2>Cadastro</h2>
-      <p>Crie sua conta preenchendo os campos abaixo</p>
+  <div class="register-wrapper">
+    <div class="register-card">
+      <h2>Criar Conta</h2>
+      <form @submit.prevent="handleRegister">
+        <div class="input-group">
+          <label for="name">Nome</label>
+          <input type="text" id="name" v-model="form.name" required />
+        </div>
 
-      <form @submit.prevent="handleCadastro">
         <div class="input-group">
           <label for="email">Email</label>
-          <input type="email" id="email" v-model="email" placeholder="seu@email.com" required />
+          <input type="email" id="email" v-model="form.email" required />
         </div>
 
         <div class="input-group">
-          <label for="senha">Senha</label>
-          <input type="password" id="senha" v-model="senha" placeholder="Senha" required />
+          <label for="password">Senha</label>
+          <input type="password" id="password" v-model="form.password" required />
         </div>
 
-        <div class="input-group">
-          <label for="confirmarSenha">Confirmar Senha</label>
-          <input type="password" id="confirmarSenha" v-model="confirmarSenha" placeholder="Confirme sua senha" required />
-        </div>
-
-        <button type="submit">Cadastrar</button>
+        <button type="submit" class="btn-register">Registrar</button>
       </form>
-
-      <p class="login-link">
-        Já tem uma conta? <router-link to="/login">Entrar</router-link>
+      <p>
+        Já tem conta?
+        <router-link to="/login" class="link-login">Entrar</router-link>
       </p>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: "Cadastro",
-  data() {
-    return {
-      nome: "",
-      email: "",
-      senha: "",
-      confirmarSenha: ""
-    };
-  },
-  methods: {
-    handleCadastro() {
-      if (this.senha !== this.confirmarSenha) {
-        alert("As senhas não coincidem!");
-        return;
+<script lang="ts">
+import { defineComponent, reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { authService } from '@/services/authService' // Corrigido aqui
+
+export default defineComponent({
+  name: 'Cadastro',
+  setup() {
+    const router = useRouter()
+    const form = reactive({
+      name: '',
+      email: '',
+      password: ''
+    })
+
+    const handleRegister = async () => {
+      try {
+        await authService.register(form) // Corrigido aqui
+        alert('Registro realizado com sucesso!')
+        router.push('/login')
+      } catch (error) {
+        alert('Falha no registro. Tente novamente.')
       }
-      // Aqui você faria a lógica para salvar o usuário (API, localStorage, etc.)
-      alert(`Usuário ${this.nome} cadastrado com sucesso!`);
-      this.$router.push("/login");
+    }
+
+    return {
+      form,
+      handleRegister
     }
   }
-};
+})
 </script>
 
 <style scoped>
-.cadastro-wrapper {
+.register-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   background: #f5f5f5;
 }
 
-.cadastro-card {
-  background: #fff;
+.register-card {
+  background: white;
   padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  width: 350px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
 
 .input-group {
@@ -80,30 +86,33 @@ export default {
 
 .input-group label {
   margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 .input-group input {
-  padding: 0.5rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  padding: 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
 
-button {
-  width: 100%;
-  padding: 0.7rem;
-  background-color: #007bff;
+.btn-register {
+  background: #42b983;
   color: white;
+  padding: 0.8rem;
+  width: 100%;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
-button:hover {
-  background-color: #0056b3;
+.btn-register:hover {
+  background: #36976d;
 }
 
-.login-link {
-  margin-top: 1rem;
-  text-align: center;
+.link-login {
+  color: #42b983;
+  font-weight: bold;
+  text-decoration: none;
 }
 </style>
