@@ -118,7 +118,7 @@
                      <router-link v-if="canCreate" to="/books/create" class="add-book-btn" title="Adicionar Livro">
                         ➕ Adicionar Livro
                     </router-link>
-                    
+
                     <div v-if="viewMode === 'table'" class="table-view">
                         <div class="table-container">
                             <table class="books-table">
@@ -568,16 +568,21 @@ watch([() => route.path, () => route.query], ([newPath, newQuery]) => {
 
 /* Estatísticas */
 .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 }
 
 .stat-item {
     display: flex;
     flex-direction: column;
     align-items: center;
+    
     padding: 1rem;
+    width: 100px;
+    height: 100px;
+    
     background: #f9fafb;
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;
@@ -640,6 +645,7 @@ watch([() => route.path, () => route.query], ([newPath, newQuery]) => {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+    margin-bottom: 10px;
 }
 
 .add-book-btn:hover {
@@ -1070,7 +1076,6 @@ watch([() => route.path, () => route.query], ([newPath, newQuery]) => {
     }
 
     .sidebar-content {
-        flex-direction: row;
         gap: 1rem;
         overflow-x: auto;
     }
