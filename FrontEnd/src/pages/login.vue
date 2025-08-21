@@ -72,7 +72,7 @@ const handleLogin = async () => {
             password: form.password
         })
 
-        successMessage.value = 'Login realizado com sucesso!'
+        
         setTimeout(() => {router.push('/books')}, 1000)
     } catch (error) {
         errorMessage.value = 'Email ou senha incorretos.'
