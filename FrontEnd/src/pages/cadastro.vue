@@ -1,7 +1,9 @@
 <template>
   <div class="register-wrapper">
-    <div class="register-card">
+    <div class="register-card" v-if="!showSuccessModal">
       <h2>Criar Conta</h2>
+      <!-- Mensagem de erro -->
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <form @submit.prevent="handleRegister">
         <div class="input-group">
         </div>
@@ -23,13 +25,22 @@
         <router-link to="/login" class="link-login">Entrar</router-link>
       </p>
     </div>
+
+    <!-- Modal de sucesso -->
+    <div v-if="showSuccessModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3>Registro realizado com sucesso!</h3>
+        <button @click="goToLogin" class="modal-btn">Ir para tela de login</button>
+        <button @click="closeModal" class="modal-btn cancel">Fechar</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { authService } from '@/services/authService' // Corrigido aqui
+import { authService } from '@/services/authService'
 
 export default defineComponent({
   name: 'Cadastro',
@@ -40,20 +51,34 @@ export default defineComponent({
       email: '',
       password: ''
     })
+    const showSuccessModal = ref(false)
+    const errorMessage = ref('')
 
     const handleRegister = async () => {
+      errorMessage.value = ''
       try {
-        await authService.register(form) // Corrigido aqui
-        alert('Registro realizado com sucesso!')
-        router.push('/login')
+        await authService.register(form)
+        showSuccessModal.value = true
       } catch (error) {
-        alert('Falha no registro. Tente novamente.')
+        errorMessage.value = 'Usuário já cadastrado.'
       }
+    }
+
+    const goToLogin = () => {
+      router.push('/login')
+    }
+
+    const closeModal = () => {
+      showSuccessModal.value = false
     }
 
     return {
       form,
-      handleRegister
+      handleRegister,
+      showSuccessModal,
+      goToLogin,
+      closeModal,
+      errorMessage
     }
   }
 })
@@ -117,5 +142,51 @@ export default defineComponent({
 .register-card p {
   text-align: center;
   margin-top: 1rem;
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  text-align: center;
+  min-width: 300px;
+}
+
+.modal-btn {
+  margin: 1rem 0.5rem 0 0.5rem;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background: #42b983;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.modal-btn.cancel {
+  background: #ccc;
+  color: #333;
+}
+
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 </style>

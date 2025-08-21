@@ -4,6 +4,10 @@
       <h2>Bem-vindo</h2>
       <p>Digite seu email e senha para entrar</p>
 
+      <!-- Mensagens de sucesso e erro -->
+      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+
       <form @submit.prevent="handleLogin">
         <div class="input-group">
           <label for="email">Email</label>
@@ -35,7 +39,6 @@
         </button>
       </form>
 
-      <!-- Botão que leva para a página de cadastro -->
       <p class="register-link">
         Não tem conta?
         <router-link to="/cadastro" class="register-btn">Registrar</router-link>
@@ -55,8 +58,8 @@ const form = reactive({
     password: '',
 })
 
-const errorMessage = ref('falha ao entrar')
-const successMessage = ref('login realizado com sucesso')
+const errorMessage = ref('')
+const successMessage = ref('')
 const isLoading = ref(false)
 
 const handleLogin = async () => {
@@ -69,10 +72,10 @@ const handleLogin = async () => {
             password: form.password
         })
 
-        successMessage.value = 'Login realizado com sucesso! Redirecionando...'
-        setTimeout(() => {router.push('/books')}, 0)
+        successMessage.value = 'Login realizado com sucesso!'
+        setTimeout(() => {router.push('/books')}, 1000)
     } catch (error) {
-        errorMessage.value = error instanceof Error ? error.message : 'Erro interno. Tente novamente mais tarde.'
+        errorMessage.value = 'Email ou senha incorretos.'
     } finally {
         isLoading.value = false
     }
@@ -146,5 +149,17 @@ button:hover {
 
 .register-btn:hover {
   text-decoration: underline;
+}
+
+.success-message {
+  color: #42b983;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.error-message {
+  color: #e74c3c;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 </style>
