@@ -5,7 +5,7 @@
         <h1> <span class="title-icon"><img src="/favicon.svg" alt="Livro"
               style="height:2em;vertical-align:middle;" /></span>
           Sistema de Biblioteca</h1>
-        <router-link to="/books" class="back-btn">← Voltar</router-link>
+        <router-link to="/books" class="back-btn">Voltar</router-link>
       </div>
     </header>
 
@@ -239,6 +239,8 @@ onMounted(() => {
 .header h1 {
   margin: 0;
   font-size: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .back-btn {
@@ -340,11 +342,20 @@ onMounted(() => {
 .cancel-btn {
   background-color: #6c757d;
   color: white;
+  
+  border: none;
   text-decoration: none;
+
   padding: 0.75rem 1.5rem;
   border-radius: 6px;
+
+  max-height: 40px;
+
   font-weight: 600;
   transition: background-color 0.3s;
+
+  display: inline-flex;
+  align-items: center;
 }
 
 .cancel-btn:hover {

@@ -5,7 +5,7 @@
                 <h1> <span class="title-icon"><img src="/favicon.svg" alt="Livro"
                             style="height:2em;vertical-align:middle;" /></span>
                     Sistema de Biblioteca</h1>
-                <router-link to="/books" class="back-btn">← Voltar</router-link>
+                <router-link to="/books" class="back-btn">Voltar</router-link>
             </div>
         </header>
 
@@ -25,10 +25,10 @@
                     </div>
                     <div class="book-actions">
                         <router-link v-if="canEdit" :to="`/books/${book.id}/edit`" class="action-btn edit-btn">
-                            ✏️ Editar
+                            Editar
                         </router-link>
                         <button v-if="canDelete" @click="confirmDelete" class="action-btn delete-btn">
-                            🗑️ Excluir
+                            Excluir
                         </button>
                     </div>
                 </div>
@@ -191,11 +191,14 @@ onMounted(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    align-self: center;
 }
 
 .header h1 {
     margin: 0;
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
 }
 
 .back-btn {
@@ -235,9 +238,9 @@ onMounted(() => {
 
 .book-cover {
     display: flex;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
-    width: 120px;
     height: 160px;
     background: #fff;
     border-radius: 8px;
@@ -272,7 +275,9 @@ onMounted(() => {
 
 .book-meta {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+
     gap: 1rem;
 }
 
@@ -302,6 +307,9 @@ onMounted(() => {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
+
+    max-height: 40px;
+
     transition: all 0.3s;
     min-width: 120px;
     justify-content: center;

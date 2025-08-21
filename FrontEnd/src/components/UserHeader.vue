@@ -6,7 +6,7 @@
                 <span class="user-email">{{ currentUser.email }}</span>
             </div>
             <button @click="handleLogout" class="logout-btn" :disabled="isLoggingOut">
-                <span class="btn-text">{{ isLoggingOut ? 'Saindo...' : 'Sair da Conta' }}</span>
+                <span class="btn-text">{{ isLoggingOut ? 'Saindo...' : 'Sair' }}</span>
             </button>
         </template>
         <template v-else>
@@ -91,7 +91,7 @@ const handleLogout = async () => {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: .5rem;
+    padding: 0.5rem;
     background: rgba(151, 239, 68, 0.9);
     color: black;
     border: none;
@@ -119,7 +119,7 @@ const handleLogout = async () => {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    padding: .5rem;
+    padding: 0.5rem;
     background: rgba(239, 68, 68, 0.9);
     color: white;
     border: none;
@@ -164,11 +164,6 @@ const handleLogout = async () => {
     .logout-btn {
         padding: 0.5rem;
         min-width: 80px;
-    }
-
-    .btn-text {
-        display: none;
-        /* Esconde o texto em telas muito pequenas */
     }
 }
 
