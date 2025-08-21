@@ -7,28 +7,33 @@ export function usePermissions() {
     return authService.getCurrentUser()
   })
 
+  const isAuthenticated = computed(() => {
+    return authService.isAuthenticated() && currentUser.value !== null
+  })
+
   const isAdmin = computed(() => {
-    return true
+    return isAuthenticated.value // Considera admin qualquer usuário autenticado
   })
 
   const canCreate = computed(() => {
-    return isAdmin.value // Apenas admins podem criar
+    return isAuthenticated.value // Apenas usuários autenticados podem criar
   })
 
   const canEdit = computed(() => {
-    return isAdmin.value // Apenas admins podem editar
+    return isAuthenticated.value // Apenas usuários autenticados podem editar
   })
 
   const canDelete = computed(() => {
-    return isAdmin.value // Apenas admins podem deletar
+    return isAuthenticated.value // Apenas usuários autenticados podem deletar
   })
 
   const canView = computed(() => {
-    return true // Todos podem visualizar
+    return true // Todos podem visualizar (autenticados e não autenticados)
   })
 
   return {
     currentUser,
+    isAuthenticated,
     isAdmin,
     canCreate,
     canEdit,

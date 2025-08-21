@@ -1,6 +1,6 @@
 // Configuração base da API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:9001'
-console.warn('API_BASE_URL:', import.meta.env.VITE_API_URL)
+const VITE_API_URL = import.meta.env.VITE_API_URL || 'http://localhost:9001'
+console.warn('VITE_API_URL:', import.meta.env.VITE_API_URL)
 
 // Interface para configuração das requisições
 interface RequestConfig {
@@ -70,7 +70,7 @@ class ApiClient {
 }
 
 // Instância global da API
-export const apiClient = new ApiClient(API_BASE_URL)
+export const apiClient = new ApiClient(VITE_API_URL)
 
 export interface User {
   id: number

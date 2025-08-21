@@ -1,17 +1,22 @@
 <template>
     <div class="user-header">
-        <div class="user-info" v-if="currentUser">
-            <span class="user-icon">👤</span>
-            <span class="user-email">{{ currentUser.email }}</span>
-        </div>
-        <button @click="handleLogout" class="logout-btn" :disabled="isLoggingOut">
-            <span class="btn-text">{{ isLoggingOut ? 'Saindo...' : 'Sair da Conta' }}</span>
-        </button>
+        <template v-if="currentUser">
+            <div class="user-info">
+                <span class="user-icon">👤</span>
+                <span class="user-email">{{ currentUser.email }}</span>
+            </div>
+            <button @click="handleLogout" class="logout-btn" :disabled="isLoggingOut">
+                <span class="btn-text">{{ isLoggingOut ? 'Saindo...' : 'Sair da Conta' }}</span>
+            </button>
+        </template>
+        <template v-else>
+            <router-link to="/login" class="login-btn">Entrar</router-link>
+        </template>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { authService } from '@/services/authService'
 
@@ -47,11 +52,7 @@ const handleLogout = async () => {
 }
 
 // Verifica se o usuário está autenticado ao montar o componente
-onMounted(() => {
-    if (!authService.isAuthenticated()) {
-        router.push('/login')
-    }
-})
+// Nota: não redirecionar automaticamente aqui — mostraremos botão de "Entrar" quando não houver usuário
 </script>
 
 <style scoped>
@@ -84,6 +85,34 @@ onMounted(() => {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: .5rem;
+    background: rgba(151, 239, 68, 0.9);
+    color: black;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    min-width: 100px;
+    text-decoration: none;
+
+    max-height: 35px;
+
+    justify-content: center;
+}
+
+/* Garantir que estados de link não mostrem underline */
+.login-btn:link,
+.login-btn:visited,
+.login-btn:hover,
+.login-btn:active {
+    text-decoration: none;
 }
 
 .logout-btn {

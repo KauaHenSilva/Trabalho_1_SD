@@ -57,7 +57,8 @@ export class AuthService {
       await apiClient.get('/auth/validate')
       return true
     } catch {
-      this.logout()
+      // this.logout()
+      console.log("Entrei aqui")
       return false
     }
   }
