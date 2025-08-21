@@ -1,10 +1,10 @@
 FROM node:24-alpine
 WORKDIR /app
 
-COPY FrontEnd/package*.json ./
+COPY client/package*.json ./
 RUN npm ci
 
-COPY FrontEnd/ .
+COPY client/ .
 COPY .env .env
 
 CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

@@ -2,11 +2,11 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: FrontEnd/Dockerfile.dev
+      dockerfile: client/Dockerfile.dev
     ports:
       - "9000:9000"
     volumes:
-      - ./FrontEnd:/app
+      - ./client:/app
       - /app/node_modules
     env_file:
       - ./.env
@@ -14,12 +14,12 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./server
       dockerfile: Dockerfile.dev
     ports:
       - "9001:9001"
     volumes:
-      - ./backend:/app
+      - ./server:/app
       - /app/node_modules
     env_file:
       - ./.env
