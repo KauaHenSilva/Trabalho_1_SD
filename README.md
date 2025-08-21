@@ -11,8 +11,10 @@ Um sistema completo de gerenciamento de biblioteca desenvolvido com Vue.js no fr
 - [Interface do Sistema](#interface-do-sistema)
 - [Estrutura do Código](#estrutura-do-código)
 - [Funcionalidades](#funcionalidades)
+- [Docker](#docker)
+- [Scripts Disponíveis](#scripts-disponíveis)
 
-## 🚀 Características
+## Características
 
 - **Gerenciamento de Livros**: Adicionar, editar, visualizar e excluir livros
 - **Sistema de Autenticação**: Login e cadastro de usuários
@@ -21,7 +23,7 @@ Um sistema completo de gerenciamento de biblioteca desenvolvido com Vue.js no fr
 - **Busca e Filtros**: Sistema de busca por título e autor
 - **Visualização Múltipla**: Visualização em tabela e cards
 
-## 🛠️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Frontend
 - **Vue.js 3** - Framework JavaScript progressivo
@@ -38,7 +40,7 @@ Um sistema completo de gerenciamento de biblioteca desenvolvido com Vue.js no fr
 - **Docker** - Containerização da aplicação
 - **Docker Compose** - Orquestração de containers
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```
 boticario_me_contrata/
@@ -73,7 +75,7 @@ boticario_me_contrata/
 └── makefile                    # Comandos de build automatizados
 ```
 
-## 🔧 Instalação e Execução
+## Instalação e Execução
 
 ### Pré-requisitos
 
@@ -152,7 +154,7 @@ npm run dev
 - **Frontend**: http://localhost:9000
 - **Backend API**: http://localhost:9001
 
-## 🖼️ Interface do Sistema
+## Interface do Sistema
 
 ### Tela de Cadastro
 
@@ -180,7 +182,7 @@ Página para adicionar ou editar informações de livros.
 
 ![Formulário de Edição](./_imgs/Editar_Livro.png)
 
-## 🏗️ Estrutura do Código
+## Estrutura do Código
 
 ### Frontend (Vue.js + TypeScript)
 
@@ -224,7 +226,7 @@ O [`server.js`](server/src/server.js) configura:
 - Imagem Alpine Linux
 - Configurações de segurança
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
 ### Gerenciamento de Livros
 - ✅ Listar todos os livros
@@ -252,7 +254,7 @@ O [`server.js`](server/src/server.js) configura:
 - ✅ Loading states
 - ✅ Validação de formulários
 
-## 🐳 Docker
+## Docker
 
 O projeto inclui configurações completas do Docker para desenvolvimento e produção:
 
@@ -266,7 +268,7 @@ O projeto inclui configurações completas do Docker para desenvolvimento e prod
 - Imagens otimizadas
 - Configurações de segurança
 
-## 📝 Scripts Disponíveis
+## Scripts Disponíveis
 
 ```bash
 # Desenvolvimento
@@ -280,7 +282,3 @@ docker-compose up --build
 # Parar containers
 docker-compose down
 ```
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
