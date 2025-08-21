@@ -5,7 +5,8 @@
             <div class="header-container">
                 <div class="header-left">
                     <h1 class="dashboard-title">
-                        <span class="title-icon">📚</span>
+                        <span class="title-icon"><img src="/favicon.svg" alt="Livro"
+                                style="height:2em;vertical-align:middle;" /></span>
                         <span>Sistema de Biblioteca</span>
                         <span v-if="dataMode" class="mode-indicator" :class="`mode-${dataMode}`">
                             {{ dataMode.toUpperCase() }}

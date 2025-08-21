@@ -2,7 +2,9 @@
   <div class="book-edit-container">
     <header class="header">
       <div class="header-content">
-        <h1>📚 Sistema de Biblioteca</h1>
+        <h1> <span class="title-icon"><img src="/favicon.svg" alt="Livro"
+              style="height:2em;vertical-align:middle;" /></span>
+          Sistema de Biblioteca</h1>
         <router-link to="/books" class="back-btn">← Voltar</router-link>
       </div>
     </header>

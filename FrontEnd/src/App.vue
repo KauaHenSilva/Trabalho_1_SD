@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { provide } from 'vue'
+import { provide, watch } from 'vue'
 import { authService } from './services/authService'
+import { useRoute } from 'vue-router'
+
+provide('authService', authService)
+
+const route = useRoute()
+watch(() => route.meta.title, (title: unknown) => {
+  document.title = typeof title === 'string' && title.length > 0 ? title : 'Sistema de Biblioteca'
+}, { immediate: true })
 
 // Prover o serviço de autenticação globalmente
 provide('authService', authService)

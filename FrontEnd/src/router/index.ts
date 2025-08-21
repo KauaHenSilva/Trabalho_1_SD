@@ -18,38 +18,40 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { title: 'Login' }
     },
     {
       path: '/cadastro',
       name: 'Cadastro',
-      component: Cadastro
+      component: Cadastro,
+      meta: { title: 'Cadastro' }
     },
     {
       path: '/books',
       name: 'BookList',
       component: BookList,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: false, title: 'Lista de Livros' }
     },
     {
       path: '/books/create',
       name: 'BookCreate',
       component: BookCreate,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, title: 'Adicionar Livro' }
     },
     {
       path: '/books/:id',
       name: 'BookDetail',
       component: BookDetail,
       props: true,
-      meta: { requiresAuth: false }
+      meta: { requiresAuth: false, title: 'Detalhes do Livro' }
     },
     {
       path: '/books/:id/edit',
       name: 'BookEdit',
       component: BookEdit,
       props: true,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, title: 'Editar Livro' }
     }
   ]
 })
