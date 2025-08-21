@@ -5,7 +5,8 @@
             <div class="header-container">
                 <div class="header-left">
                     <h1 class="dashboard-title">
-                        <span class="title-icon">📚</span>
+                        <span class="title-icon"><img src="/favicon.svg" alt="Livro"
+                                style="height:2em;vertical-align:middle;" /></span>
                         <span>Sistema de Biblioteca</span>
                         <span v-if="dataMode" class="mode-indicator" :class="`mode-${dataMode}`">
                             {{ dataMode.toUpperCase() }}
@@ -109,13 +110,11 @@
                         Tentar Novamente
                     </button>
                 </div>
-                
-                
 
                 <!-- Conteúdo Principal -->
                 <div v-else class="main-content">
                     <!-- Visualização em Tabela -->
-                     <router-link v-if="canCreate" to="/books/create" class="add-book-btn" title="Adicionar Livro">
+                    <router-link v-if="canCreate" to="/books/create" class="add-book-btn" title="Adicionar Livro">
                         ➕ Adicionar Livro
                     </router-link>
 
@@ -140,7 +139,7 @@
 
                                         <td class="author-cell">{{ book.title }}</td>
                                         <td class="year-cell">{{ book.year }}</td>
-                                        <td v-if="canEdit || canDelete" class="actions-cell">
+                                        <td class="actions-cell">
                                             <div class="action-buttons">
                                                 <router-link :to="`/books/${book.id}`" class="action-btn-sm view-btn"
                                                     title="Ver detalhes">
@@ -197,7 +196,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <!-- Estado Vazio -->
                     <div v-if="filteredBooks.length === 0 && !isLoading" class="empty-state">
                         <div class="empty-icon">📚</div>
@@ -253,12 +252,12 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import type { Book } from '../services/api'
 import { usePermissions } from '../composables/usePermissions'
 import { bookService } from '@/services/bookService'
+import UserHeader from '@/components/UserHeader.vue'
 
-const router = useRouter()
 const route = useRoute()
 const { canCreate, canEdit, canDelete } = usePermissions()
 
@@ -578,11 +577,11 @@ watch([() => route.path, () => route.query], ([newPath, newQuery]) => {
     display: flex;
     flex-direction: column;
     align-items: center;
-    
+
     padding: 1rem;
     width: 100px;
     height: 100px;
-    
+
     background: #f9fafb;
     border-radius: 0.5rem;
     border: 1px solid #e5e7eb;

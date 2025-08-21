@@ -2,7 +2,9 @@
     <div class="book-detail-container">
         <header class="header">
             <div class="header-content">
-                <h1>📚 Sistema de Biblioteca</h1>
+                <h1> <span class="title-icon"><img src="/favicon.svg" alt="Livro"
+                            style="height:2em;vertical-align:middle;" /></span>
+                    Sistema de Biblioteca</h1>
                 <router-link to="/books" class="back-btn">← Voltar</router-link>
             </div>
         </header>
@@ -22,10 +24,10 @@
                         </div>
                     </div>
                     <div class="book-actions">
-                        <router-link :to="`/books/${book.id}/edit`" class="action-btn edit-btn">
+                        <router-link v-if="canEdit" :to="`/books/${book.id}/edit`" class="action-btn edit-btn">
                             ✏️ Editar
                         </router-link>
-                        <button @click="confirmDelete" class="action-btn delete-btn">
+                        <button v-if="canDelete" @click="confirmDelete" class="action-btn delete-btn">
                             🗑️ Excluir
                         </button>
                     </div>
@@ -102,9 +104,11 @@ import type { Book } from '@/services/api'
 import { bookService } from '@/services/bookService'
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
+import { usePermissions } from '@/composables/usePermissions'
 
 const router = useRouter()
 const route = useRoute()
+const { canEdit, canDelete } = usePermissions()
 
 const book = ref<Book | null>(null)
 const loading = ref(true)
@@ -139,11 +143,15 @@ const formatDate = (dateString: string): string => {
 }
 
 const confirmDelete = () => {
+    if (!canDelete.value) {
+        alert('Você não tem permissão para excluir livros.')
+        return
+    }
     showDeleteModal.value = true
 }
 
 const deleteBook = async () => {
-    if (!book.value) return
+    if (!book.value || !canDelete.value) return
 
     try {
         await bookService.deleteBook(Number(route.params.id))

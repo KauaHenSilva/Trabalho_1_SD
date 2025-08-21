@@ -5,7 +5,7 @@ import requireAuth from '../middlewares/requireAuth.js';
 const router = Router();
 
 // GET /books - lista todos os livros
-router.get('/', requireAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const { data, error } = await supabase
       .from('books')
@@ -19,8 +19,22 @@ router.get('/', requireAuth, async (req, res) => {
   }
 });
 
+// router.get('/', requireAuth, async (req, res) => {
+//   try {
+//     const { data, error } = await supabase
+//       .from('books')
+//       .select('*')
+//       .order('created_at', { ascending: false });
+
+//     if (error) return res.status(400).json({ error: error.message });
+//     return res.json(data || []);
+//   } catch (err) {
+//     return res.status(500).json({ error: 'Erro ao listar livros.' });
+//   }
+// });
+
 // GET /books/:id - busca livro por id
-router.get('/:id', requireAuth, async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const { data, error } = await supabase
@@ -35,6 +49,22 @@ router.get('/:id', requireAuth, async (req, res) => {
     return res.status(500).json({ error: 'Erro ao buscar livro.' });
   }
 });
+
+// router.get('/:id', requireAuth, async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { data, error } = await supabase
+//       .from('books')
+//       .select('*')
+//       .eq('id', id)
+//       .single();
+
+//     if (error) return res.status(404).json({ error: 'Livro não encontrado.' });
+//     return res.json(data);
+//   } catch (err) {
+//     return res.status(500).json({ error: 'Erro ao buscar livro.' });
+//   }
+// });
 
 // POST /books - cria um novo livro
 router.post('/', requireAuth, async (req, res) => {

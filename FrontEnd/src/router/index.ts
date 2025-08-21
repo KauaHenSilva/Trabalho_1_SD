@@ -18,50 +18,61 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: { title: 'Login' }
     },
     {
       path: '/cadastro',
       name: 'Cadastro',
-      component: Cadastro
+      component: Cadastro,
+      meta: { title: 'Cadastro' }
     },
     {
       path: '/books',
       name: 'BookList',
       component: BookList,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: false, title: 'Lista de Livros' }
     },
     {
       path: '/books/create',
       name: 'BookCreate',
       component: BookCreate,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, title: 'Adicionar Livro' }
     },
     {
       path: '/books/:id',
       name: 'BookDetail',
       component: BookDetail,
       props: true,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: false, title: 'Detalhes do Livro' }
     },
     {
       path: '/books/:id/edit',
       name: 'BookEdit',
       component: BookEdit,
       props: true,
-      meta: { requiresAuth: true }
+      meta: { requiresAuth: true, title: 'Editar Livro' }
     }
   ]
 })
 
+// ...existing code...
 router.beforeEach(async (to, from, next) => {
-  const token_valido = await authService.validateToken()
-  if (to.meta.requiresAuth && !token_valido) {
-    console.log('Rota protegida. Redirecionando para o login...')
-    next('/login')
-  } else {
-    next()
+  console.log('[ROUTER GUARD] to:', to.fullPath, 'meta.requiresAuth:', to.meta?.requiresAuth)
+  if (to.meta && to.meta.requiresAuth) {
+    try {
+      const authenticated = authService.isAuthenticated() || await authService.validateToken().catch(() => false)
+      console.log('[ROUTER GUARD] authenticated:', authenticated)
+      if (!authenticated) {
+        return next({ path: '/login', query: { redirect: to.fullPath } })
+      }
+    } catch (err) {
+      console.error('[ROUTER GUARD] error validating token:', err)
+      return next({ path: '/login', query: { redirect: to.fullPath } })
+    }
   }
+  next()
 })
+// ...existing code...
 
 export default router

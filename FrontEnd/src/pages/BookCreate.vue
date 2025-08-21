@@ -2,7 +2,9 @@
   <div class="book-create-container">
     <header class="header">
       <div class="header-content">
-        <h1>📚 Sistema de Biblioteca</h1>
+        <h1> <span class="title-icon"><img src="/favicon.svg" alt="Livro"
+              style="height:2em;vertical-align:middle;" /></span>
+          Sistema de Biblioteca</h1>
         <router-link to="/books" class="back-btn">← Voltar</router-link>
       </div>
     </header>
@@ -10,32 +12,20 @@
     <main class="main-content">
       <div class="form-container">
         <h2>Adicionar Novo Livro</h2>
-        
+
         <form @submit.prevent="createBook" class="book-form">
           <div class="form-row">
             <div class="form-group">
               <label for="title">Título *</label>
-              <input 
-                type="text" 
-                id="title" 
-                v-model="form.title"
-                :class="{ 'input-error': errors.title }"
-                placeholder="Digite o título do livro"
-                required
-              >
+              <input type="text" id="title" v-model="form.title" :class="{ 'input-error': errors.title }"
+                placeholder="Digite o título do livro" required>
               <span v-if="errors.title" class="error-text">{{ errors.title }}</span>
             </div>
 
             <div class="form-group">
               <label for="author">Autor *</label>
-              <input 
-                type="text" 
-                id="author" 
-                v-model="form.author"
-                :class="{ 'input-error': errors.author }"
-                placeholder="Nome do autor"
-                required
-              >
+              <input type="text" id="author" v-model="form.author" :class="{ 'input-error': errors.author }"
+                placeholder="Nome do autor" required>
               <span v-if="errors.author" class="error-text">{{ errors.author }}</span>
             </div>
           </div>
@@ -43,16 +33,8 @@
           <div class="form-row">
             <div class="form-group">
               <label for="year">Ano de Publicação *</label>
-              <input 
-                type="number" 
-                id="year" 
-                v-model="form.year"
-                :class="{ 'input-error': errors.year }"
-                placeholder="2023"
-                min="1000"
-                :max="currentYear"
-                required
-              >
+              <input type="number" id="year" v-model="form.year" :class="{ 'input-error': errors.year }"
+                placeholder="2023" min="1000" :max="currentYear" required>
               <span v-if="errors.year" class="error-text">{{ errors.year }}</span>
             </div>
           </div>
@@ -60,15 +42,8 @@
           <div class="form-row">
             <div class="form-group">
               <label for="pages">Número de Páginas *</label>
-              <input 
-                type="number" 
-                id="pages" 
-                v-model="form.pages"
-                :class="{ 'input-error': errors.pages }"
-                placeholder="300"
-                min="1"
-                required
-              >
+              <input type="number" id="pages" v-model="form.pages" :class="{ 'input-error': errors.pages }"
+                placeholder="300" min="1" required>
               <span v-if="errors.pages" class="error-text">{{ errors.pages }}</span>
             </div>
 
@@ -205,7 +180,7 @@ const createBook = async () => {
   background-color: #28a745;
   color: white;
   padding: 1rem 0;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .header-content {
@@ -246,7 +221,7 @@ const createBook = async () => {
   background: white;
   border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .form-container h2 {
@@ -366,26 +341,28 @@ const createBook = async () => {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 768px) {
   .header-content {
     padding: 0 1rem;
   }
-  
+
   .main-content {
     padding: 1rem;
   }
-  
+
   .form-container {
     padding: 1.5rem;
   }
-  
+
   .form-row {
     grid-template-columns: 1fr;
   }
-  
+
   .form-actions {
     flex-direction: column;
   }

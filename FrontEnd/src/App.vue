@@ -1,6 +1,14 @@
 <script setup lang="ts">
-import { provide } from 'vue'
+import { provide, watch } from 'vue'
 import { authService } from './services/authService'
+import { useRoute } from 'vue-router'
+
+provide('authService', authService)
+
+const route = useRoute()
+watch(() => route.meta.title, (title: unknown) => {
+  document.title = typeof title === 'string' && title.length > 0 ? title : 'Sistema de Biblioteca'
+}, { immediate: true })
 
 // Prover o serviço de autenticação globalmente
 provide('authService', authService)
@@ -32,7 +40,7 @@ provide('authService', authService)
   --color-warning: #ffc107;
   --color-danger: #dc3545;
   --color-success: #28a745;
-  
+
   /* Cores neutras */
   --color-white: #ffffff;
   --color-light: #f8f9fa;
@@ -43,7 +51,7 @@ provide('authService', authService)
   --color-gray-500: #495057;
   --color-gray-600: #343a40;
   --color-gray-700: #212529;
-  
+
   /* Tipografia */
   --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-size-xs: 0.75rem;
@@ -53,7 +61,7 @@ provide('authService', authService)
   --font-size-xl: 1.25rem;
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem;
-  
+
   /* Espaçamentos */
   --spacing-1: 0.25rem;
   --spacing-2: 0.5rem;
@@ -64,20 +72,20 @@ provide('authService', authService)
   --spacing-8: 2rem;
   --spacing-10: 2.5rem;
   --spacing-12: 3rem;
-  
+
   /* Bordas */
   --border-radius-sm: 0.25rem;
   --border-radius: 0.375rem;
   --border-radius-md: 0.5rem;
   --border-radius-lg: 0.75rem;
   --border-radius-xl: 1rem;
-  
+
   /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-  
+
   /* Breakpoints para responsividade */
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
@@ -127,82 +135,233 @@ body {
   padding: 0 var(--spacing-3);
 }
 
-.col-12 { flex: 0 0 100%; max-width: 100%; }
-.col-6 { flex: 0 0 50%; max-width: 50%; }
-.col-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-.col-3 { flex: 0 0 25%; max-width: 25%; }
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.col-4 {
+  flex: 0 0 33.333333%;
+  max-width: 33.333333%;
+}
+
+.col-3 {
+  flex: 0 0 25%;
+  max-width: 25%;
+}
 
 /* Classes de display responsivas */
-.d-none { display: none !important; }
-.d-block { display: block !important; }
-.d-flex { display: flex !important; }
-.d-grid { display: grid !important; }
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.d-grid {
+  display: grid !important;
+}
 
 /* Flexbox utilities */
-.flex-column { flex-direction: column !important; }
-.flex-row { flex-direction: row !important; }
-.justify-content-center { justify-content: center !important; }
-.justify-content-between { justify-content: space-between !important; }
-.align-items-center { align-items: center !important; }
-.flex-wrap { flex-wrap: wrap !important; }
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-row {
+  flex-direction: row !important;
+}
+
+.justify-content-center {
+  justify-content: center !important;
+}
+
+.justify-content-between {
+  justify-content: space-between !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}
+
+.flex-wrap {
+  flex-wrap: wrap !important;
+}
 
 /* Text utilities */
-.text-center { text-align: center !important; }
-.text-left { text-align: left !important; }
-.text-right { text-align: right !important; }
+.text-center {
+  text-align: center !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
 
 /* Margin and padding utilities */
-.m-0 { margin: 0 !important; }
-.m-1 { margin: var(--spacing-1) !important; }
-.m-2 { margin: var(--spacing-2) !important; }
-.m-3 { margin: var(--spacing-3) !important; }
-.m-4 { margin: var(--spacing-4) !important; }
-.m-5 { margin: var(--spacing-5) !important; }
+.m-0 {
+  margin: 0 !important;
+}
 
-.p-0 { padding: 0 !important; }
-.p-1 { padding: var(--spacing-1) !important; }
-.p-2 { padding: var(--spacing-2) !important; }
-.p-3 { padding: var(--spacing-3) !important; }
-.p-4 { padding: var(--spacing-4) !important; }
-.p-5 { padding: var(--spacing-5) !important; }
+.m-1 {
+  margin: var(--spacing-1) !important;
+}
+
+.m-2 {
+  margin: var(--spacing-2) !important;
+}
+
+.m-3 {
+  margin: var(--spacing-3) !important;
+}
+
+.m-4 {
+  margin: var(--spacing-4) !important;
+}
+
+.m-5 {
+  margin: var(--spacing-5) !important;
+}
+
+.p-0 {
+  padding: 0 !important;
+}
+
+.p-1 {
+  padding: var(--spacing-1) !important;
+}
+
+.p-2 {
+  padding: var(--spacing-2) !important;
+}
+
+.p-3 {
+  padding: var(--spacing-3) !important;
+}
+
+.p-4 {
+  padding: var(--spacing-4) !important;
+}
+
+.p-5 {
+  padding: var(--spacing-5) !important;
+}
 
 /* Media queries para responsividade */
 @media (max-width: 767px) {
   .container {
     padding: 0 var(--spacing-3);
   }
-  
-  .col-sm-12 { flex: 0 0 100%; max-width: 100%; }
-  .col-sm-6 { flex: 0 0 50%; max-width: 50%; }
-  
-  .d-sm-none { display: none !important; }
-  .d-sm-block { display: block !important; }
-  .d-sm-flex { display: flex !important; }
-  
-  .text-sm-center { text-align: center !important; }
-  .flex-sm-column { flex-direction: column !important; }
+
+  .col-sm-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-sm-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .d-sm-none {
+    display: none !important;
+  }
+
+  .d-sm-block {
+    display: block !important;
+  }
+
+  .d-sm-flex {
+    display: flex !important;
+  }
+
+  .text-sm-center {
+    text-align: center !important;
+  }
+
+  .flex-sm-column {
+    flex-direction: column !important;
+  }
 }
 
 @media (min-width: 768px) {
-  .d-md-none { display: none !important; }
-  .d-md-block { display: block !important; }
-  .d-md-flex { display: flex !important; }
-  
-  .col-md-12 { flex: 0 0 100%; max-width: 100%; }
-  .col-md-6 { flex: 0 0 50%; max-width: 50%; }
-  .col-md-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-  .col-md-3 { flex: 0 0 25%; max-width: 25%; }
+  .d-md-none {
+    display: none !important;
+  }
+
+  .d-md-block {
+    display: block !important;
+  }
+
+  .d-md-flex {
+    display: flex !important;
+  }
+
+  .col-md-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-md-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-md-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
 }
 
 @media (min-width: 992px) {
-  .d-lg-none { display: none !important; }
-  .d-lg-block { display: block !important; }
-  .d-lg-flex { display: flex !important; }
-  
-  .col-lg-12 { flex: 0 0 100%; max-width: 100%; }
-  .col-lg-6 { flex: 0 0 50%; max-width: 50%; }
-  .col-lg-4 { flex: 0 0 33.333333%; max-width: 33.333333%; }
-  .col-lg-3 { flex: 0 0 25%; max-width: 25%; }
+  .d-lg-none {
+    display: none !important;
+  }
+
+  .d-lg-block {
+    display: block !important;
+  }
+
+  .d-lg-flex {
+    display: flex !important;
+  }
+
+  .col-lg-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .col-lg-6 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  .col-lg-4 {
+    flex: 0 0 33.333333%;
+    max-width: 33.333333%;
+  }
+
+  .col-lg-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+  }
 }
 
 /* Componentes base */
@@ -316,8 +475,13 @@ body {
 
 /* Loading animations */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
