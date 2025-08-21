@@ -165,7 +165,7 @@ A interface de cadastro permite que novos usuários se registrem no sistema.
 ### Tela de Login
 A interface de autenticação permite que usuários façam login ou se cadastrem no sistema.
 
-![Tela de Login](./_imgs/login.png)
+![Tela de Login](./_imgs/Login.png)
 
 ### Lista de Livros
 Dashboard principal mostrando a lista de livros com opções de visualização em tabela e cards
