@@ -2,6 +2,10 @@
 
 Um sistema completo de gerenciamento de biblioteca desenvolvido com Vue.js no frontend e Node.js no backend, utilizando Supabase como banco de dados.
 
+# Link do video do youtube
+
+[![Acessar o site](https://img.shields.io/badge/Assistir_no_YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/13fXHcK1Zwg)
+
 ## 📋 Índice
 
 - [Características](#características)
